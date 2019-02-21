@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package proto;
+
+service EmojiService {
+  rpc InsertEmojis (EmojiRequest) returns (EmojiResponse);
+}
+
+message EmojiRequest {
+  string input_text = 1;
+}
+
+message EmojiResponse {
+  string output_text = 1;
+}
