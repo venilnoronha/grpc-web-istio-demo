@@ -10,5 +10,18 @@ window.insertEmojis = function() {
 
   client.insertEmojis(request, {}, (err, response) => {
     editor.innerText = response.getOutputText();
+    window.focusEditor();
   });
-}
+};
+
+window.focusEditor = function() {
+  editor.focus();
+  var range = document.createRange();
+  range.selectNodeContents(editor);
+  range.collapse(false);
+  var sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(range);
+};
+
+window.focusEditor();
