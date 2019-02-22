@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: server
+  labels:
+    app: server
+spec:
+  ports:
+  - name: grpc-web
+    port: 9000
+  selector:
+    app: server
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: server
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: server
+        version: v1
+    spec:
+      containers:
+      - name: server
+        image: vnoronha/grpc-web-demo:server
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 9000
