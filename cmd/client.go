@@ -8,7 +8,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/venilnoronha/grpc-web-demo/proto"
+	"github.com/venilnoronha/grpc-web-istio-demo/proto"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 )

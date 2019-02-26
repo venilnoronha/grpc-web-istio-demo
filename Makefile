@@ -23,6 +23,7 @@ help:
 	@echo "    deploy-gateway           Deploy the gateway configuration"
 	@echo ""
 	@echo "    inspect-proxy            Inspect the Istio proxy configuration"
+	@echo "    proxy-logs               Inspect the Istio proxy logs"
 	@echo ""
 	@echo "    reset                    Reset the deployment"
 	@echo ""
@@ -44,7 +45,7 @@ run-server:
 
 .PHONY: run-server-docker
 run-server-docker:
-	docker run --rm -p 9000:9000 vnoronha/grpc-web-demo:server
+	docker run --rm -p 9000:9000 vnoronha/grpc-web-istio-demo:server
 
 .PHONY: run-client-local
 run-client-local:
@@ -56,11 +57,11 @@ run-client-istio:
 
 .PHONY: build-server
 build-server:
-	docker build -f docker/server.Dockerfile -t vnoronha/grpc-web-demo:server .
+	docker build -f docker/server.Dockerfile -t vnoronha/grpc-web-istio-demo:server .
 
 .PHONY: build-webapp
 build-webapp:
-	docker build -f docker/webapp.Dockerfile -t vnoronha/grpc-web-demo:webapp .
+	docker build -f docker/webapp.Dockerfile -t vnoronha/grpc-web-istio-demo:webapp .
 
 .PHONY: deploy-server
 deploy-server:
@@ -78,6 +79,11 @@ deploy-gateway:
 inspect-proxy:
 	$(eval POD := $(shell kubectl get pod -l app=server -o jsonpath='{.items..metadata.name}'))
 	istioctl proxy-config listeners ${POD}.default --port 9000 -o json
+
+.PHONY: proxy-logs
+proxy-logs:
+	$(eval POD := $(shell kubectl get pod -l app=server -o jsonpath='{.items..metadata.name}'))
+	kubectl logs ${POD} istio-proxy -f
 
 .PHONY: reset
 reset:

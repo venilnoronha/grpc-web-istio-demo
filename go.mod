@@ -1,4 +1,4 @@
-module github.com/venilnoronha/grpc-web-demo
+module github.com/venilnoronha/grpc-web-istio-demo
 
 require (
 	github.com/golang/protobuf v1.2.0

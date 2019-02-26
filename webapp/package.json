@@ -1,7 +1,7 @@
 {
-  "name": "grpc-web-demo",
+  "name": "grpc-web-istio-demo",
   "version": "0.1.0",
-  "description": "gRPC-Web Demo",
+  "description": "gRPC-Web Istio Demo",
   "devDependencies": {
     "@grpc/proto-loader": "^0.3.0",
     "async": "^1.5.2",

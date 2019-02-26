@@ -8,7 +8,7 @@ import (
 	"log"
 	"net"
 
-	"github.com/venilnoronha/grpc-web-demo/proto"
+	"github.com/venilnoronha/grpc-web-istio-demo/proto"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 	emoji "gopkg.in/kyokomi/emoji.v1"
