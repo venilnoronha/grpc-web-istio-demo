@@ -6,7 +6,7 @@ COPY ./ .
 RUN CGO_ENABLED=0 GOOS=linux GO111MODULE=on \
     go build -a -installsuffix cgo -v -o bin/server ./cmd/server.go
 
-FROM photon:2.0
+FROM scratch
 WORKDIR /bin/
 COPY --from=builder /root/go/src/github.com/vnoronha/grpc-web-istio-demo/bin/server .
 ENTRYPOINT [ "/bin/server" ]
