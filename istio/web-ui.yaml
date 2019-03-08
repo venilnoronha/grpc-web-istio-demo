@@ -1,31 +1,31 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: webapp
+  name: web-ui
   labels:
-    app: webapp
+    app: web-ui
 spec:
   ports:
   - name: http
     port: 9001
   selector:
-    app: webapp
+    app: web-ui
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: webapp
+  name: web-ui
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: webapp
+        app: web-ui
         version: v1
     spec:
       containers:
-      - name: webapp
-        image: vnoronha/grpc-web-istio-demo:webapp
+      - name: web-ui
+        image: vnoronha/grpc-web-istio-demo:web-ui
         imagePullPolicy: Always
         ports:
         - containerPort: 9001

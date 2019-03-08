@@ -59,4 +59,4 @@ spec:
       allowCredentials: true
   - route:
     - destination:
-        host: webapp
+        host: web-ui

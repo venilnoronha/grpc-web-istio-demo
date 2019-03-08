@@ -1,6 +1,8 @@
 # Copyright 2019 VMware, Inc.
 # SPDX-License-Identifier: BSD-3-Clause
 
+SHELL := /bin/bash
+
 .PHONY: help
 help:
 	@echo "Usage: make <TARGET>"
@@ -16,11 +18,12 @@ help:
 	@echo "    run-client-istio         Run the client and connect to server via Istio"
 	@echo ""
 	@echo "    build-server             Build the server image"
-	@echo "    build-webapp             Build the webapp image"
+	@echo "    build-web-ui             Build the web-ui image"
 	@echo ""
 	@echo "    deploy-server            Deploy the server over Kubernetes"
-	@echo "    deploy-webapp            Deploy the webapp over Kubernetes"
+	@echo "    deploy-web-ui            Deploy the web-ui over Kubernetes"
 	@echo "    deploy-gateway           Deploy the gateway configuration"
+	@echo "    watch-pods               Watch the Kubernetes deployment"
 	@echo ""
 	@echo "    inspect-proxy            Inspect the Istio proxy configuration"
 	@echo "    proxy-logs               Inspect the Istio proxy logs"
@@ -59,21 +62,25 @@ run-client-istio:
 build-server:
 	docker build -f docker/server.Dockerfile -t vnoronha/grpc-web-istio-demo:server .
 
-.PHONY: build-webapp
-build-webapp:
-	docker build -f docker/webapp.Dockerfile -t vnoronha/grpc-web-istio-demo:webapp .
+.PHONY: build-web-ui
+build-web-ui:
+	docker build -f docker/web-ui.Dockerfile -t vnoronha/grpc-web-istio-demo:web-ui .
 
 .PHONY: deploy-server
 deploy-server:
 	kubectl apply -f <(istioctl kube-inject -f istio/server.yaml)
 
-.PHONY: deploy-webapp
-deploy-webapp:
-	kubectl apply -f <(istioctl kube-inject -f istio/webapp.yaml)
+.PHONY: deploy-web-ui
+deploy-web-ui:
+	kubectl apply -f <(istioctl kube-inject -f istio/web-ui.yaml)
 
 .PHONY: deploy-gateway
 deploy-gateway:
 	kubectl apply -f istio/gateway.yaml
+
+.PHONY: watch-pods
+watch-pods:
+	watch kubectl get pods
 
 .PHONY: inspect-proxy
 inspect-proxy:
@@ -88,5 +95,5 @@ proxy-logs:
 .PHONY: reset
 reset:
 	kubectl delete -f istio/server.yaml
-	kubectl delete -f istio/webapp.yaml
+	kubectl delete -f istio/web-ui.yaml
 	kubectl delete -f istio/gateway.yaml
