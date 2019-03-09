@@ -9,5 +9,4 @@ FROM scratch
 WORKDIR /bin/
 COPY --from=builder /root/go/src/github.com/venilnoronha/grpc-web-istio-demo/bin/server .
 ENTRYPOINT [ "/bin/server" ]
-CMD [ "9000" ]
 EXPOSE 9000
